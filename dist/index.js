@@ -4,6 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
+var mongoose_1 = __importDefault(require("mongoose"));
+var config_1 = require("./config");
+var Logger_1 = __importDefault(require("./library/Logger"));
+mongoose_1.default.connect(String(config_1.config.mongo.url))
+    .then(function () { return Logger_1.default.info('succesfully connect to mongo'); })
+    .catch(function () { return Logger_1.default.error('error connect to mongo'); });
 var app = (0, express_1.default)();
 app.use(express_1.default.json());
 var users = [
@@ -30,6 +36,6 @@ app.delete('/users/:id', function (req, res) {
     users = users.filter(function (user) { return user.id !== id; });
     res.sendStatus(204);
 });
-app.listen(3000, function () {
-    console.log('Server is listening on port 3000');
+app.listen(config_1.config.server.port, function () {
+    Logger_1.default.success('Server is listening on port ' + config_1.config.server.port);
 });

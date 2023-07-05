@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
-import { config } from './config/config';
+import { config } from './config';
 import Logger from './library/Logger';
 
 mongoose.connect(String(config.mongo.url))
